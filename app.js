@@ -1,7 +1,34 @@
-const http = require("http");
+const { readFile, writeFile } = require("fs");
 
-const server = http.createServer((req, res) => {
-  res.write("Welcome to home page");
-});
+const getText = (path) => {
+  return new Promise((resolve, reject) => {
+    readFile(path, "utf-8", (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
 
-server.listen(5000);
+// const data = await getText("a.txt");
+// console.log(data);
+// getText("a.txt")
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((err) => console.log(err));
+
+// async approach
+
+const startReadingFile = async () => {
+  try {
+    const data = await getText("a.txt");
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+startReadingFile();
